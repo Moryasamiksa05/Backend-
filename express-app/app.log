@@ -1,0 +1,5 @@
+2025-06-02T07:22:48.133Z [INFO]: Server running at http://localhost:3000
+2025-06-02T07:23:22.594Z [WARN]: POST /name with missing name
+2025-06-02T07:23:42.754Z [INFO]: GET / called
+2025-06-02T07:24:19.815Z [INFO]: POST /name with name: samiksha maurya
+2025-06-02T07:24:36.178Z [INFO]: Server running at http://localhost:3000
