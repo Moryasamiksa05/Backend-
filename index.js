@@ -103,6 +103,37 @@ app.post('/register', async (req, res) => {
   }
 });
 
+// Login route
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    logger.warn('POST /login with missing fields');
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      logger.warn(`POST /login - Email not found: ${email}`);
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      logger.warn(`POST /login - Invalid password for email: ${email}`);
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    logger.info(`User logged in: ${email}`);
+    res.status(200).json({ message: 'Login successful', user: { username: user.username, email: user.email } });
+  } catch (error) {
+    logger.error(`Login failed: ${error.message}`);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 // Start server
 app.listen(port, () => {
   logger.info(` Server running at http://localhost:${port}`);
