@@ -1,12 +1,10 @@
-2025-06-02T07:22:48.133Z [INFO]: Server running at http://localhost:3000
-2025-06-02T07:23:22.594Z [WARN]: POST /name with missing name
-2025-06-02T07:23:42.754Z [INFO]: GET / called
-2025-06-02T07:24:19.815Z [INFO]: POST /name with name: samiksha maurya
-2025-06-02T07:24:36.178Z [INFO]: Server running at http://localhost:3000
-2025-06-09T06:16:04.641Z [INFO]: Server running at http://localhost:3000
-2025-06-09T06:16:06.716Z [INFO]: MongoDB Connected
-2025-06-09T06:16:45.356Z [INFO]: Server running at http://localhost:3000
-2025-06-09T06:16:46.204Z [INFO]: MongoDB Connected
-2025-06-09T06:20:28.496Z [INFO]: POST /name saved: samiksha maurya
-2025-06-09T06:25:10.101Z [INFO]: Server running at http://localhost:3000
-2025-06-09T06:25:10.883Z [INFO]: MongoDB Connected
+2025-06-10T04:50:12.340Z [INFO]:  Server running at http://localhost:3000
+2025-06-10T04:50:13.695Z [INFO]:  MongoDB Connected
+2025-06-10T04:52:15.113Z [INFO]: User registered: abcuser@example.com
+2025-06-10T04:53:59.583Z [INFO]: POST /name saved: abccc
+2025-06-10T04:54:48.443Z [INFO]:  Server running at http://localhost:3000
+2025-06-10T04:54:49.472Z [INFO]:  MongoDB Connected
+2025-06-10T04:55:04.349Z [INFO]:  Server running at http://localhost:3000
+2025-06-10T04:55:05.571Z [INFO]:  MongoDB Connected
+2025-06-10T04:55:18.953Z [INFO]:  Server running at http://localhost:3000
+2025-06-10T04:55:19.611Z [INFO]:  MongoDB Connected
