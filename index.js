@@ -9,11 +9,23 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://frontend-repo-1z1j6vxd0-moryasamiksa05s-projects.vercel.app'
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST'],
   credentials: true
 }));
+
 
 // Body parser
 app.use(express.json());
