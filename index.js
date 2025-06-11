@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors'); 
 const express = require('express');
 const mongoose = require('mongoose');
 const winston = require('winston');
@@ -7,8 +8,16 @@ const bcrypt = require('bcrypt');
 const app = express();
 const port = process.env.PORT || 3000;
 
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
 // Body parser
 app.use(express.json());
+
 
 // Setup Winston logger
 const logger = winston.createLogger({
