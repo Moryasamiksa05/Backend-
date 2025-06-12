@@ -1,4 +1,8 @@
 require('dotenv').config();
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+
 const cors = require('cors'); 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -7,25 +11,28 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
 const allowedOrigins = [
   'http://localhost:5173',
   'https://frontend-repo-vert.vercel.app'
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    console.log('Request Origin:', origin); // optional for debug
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'OPTIONS'],
-  credentials: true
-}));
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
 
-app.options('*', cors()); // ✅ preflight handler
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
 
 
 
