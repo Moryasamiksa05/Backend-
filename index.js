@@ -1,17 +1,19 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
+const Admin = require('./models/admin');
 
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
 });
 
-const cors = require('cors'); 
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const winston = require('winston');
 const bcrypt = require('bcrypt');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,6 +45,8 @@ app.use(cors(corsOptions));
 
 // Body parser
 app.use(express.json());
+app.use('/api/admin', adminRoutes);
+
 
 
 // Setup Winston logger
@@ -65,8 +69,8 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => logger.info(" MongoDB Connected"))
-.catch((err) => logger.error(" MongoDB Connection Error: " + err));
+  .then(() => logger.info(" MongoDB Connected"))
+  .catch((err) => logger.error(" MongoDB Connection Error: " + err));
 
 // Mongoose Schemas & Models
 const nameSchema = new mongoose.Schema({
@@ -76,7 +80,7 @@ const NameModel = mongoose.model("Name", nameSchema);
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
-  email:    { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true }
 });
 const User = mongoose.model("User", userSchema);
@@ -254,6 +258,48 @@ app.put('/edit-user', authenticateUser, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+// create-admin
+app.post('/create-admin', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
+
+  try {
+    // Check if admin with same email already exists
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      return res.status(409).json({ error: 'Admin with this email already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = new Admin({ email, password: hashedPassword });
+
+    await newAdmin.save();
+    res.status(201).json({ message: 'Admin created successfully' });
+
+  } catch (error) {
+    console.error('Error creating admin:', error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

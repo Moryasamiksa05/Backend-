@@ -1,1 +1,6 @@
-
+2025-06-17T10:24:12.613Z [INFO]:  Server running at http://localhost:3000
+2025-06-17T10:24:13.626Z [INFO]:  MongoDB Connected
+2025-06-17T10:24:59.118Z [WARN]: POST /login - Invalid password for email: mauryasamiksha188@gmail.com
+2025-06-17T10:26:32.529Z [WARN]: POST /login - Invalid password for email: mauryasamiksha188@gmail.com
+2025-06-17T10:26:40.078Z [WARN]: POST /login - Invalid password for email: sara12@gmail.com
+2025-06-17T10:26:49.416Z [INFO]: User logged in: sara12@gmail.com
