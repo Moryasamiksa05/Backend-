@@ -18,11 +18,7 @@ const adminRoutes = require('./routes/admin');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://frontend-repo-ri9s.vercel.app'
-
-];
+app.use(cors()); 
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -35,7 +31,7 @@ const corsOptions = {
   credentials: true,
 };
 
-app.use(cors(corsOptions));
+
 
 
 
@@ -45,6 +41,7 @@ app.use(cors(corsOptions));
 
 // Body parser
 app.use(express.json());
+
 app.use('/api/admin', adminRoutes);
 
 
@@ -186,8 +183,6 @@ app.post('/login', async (req, res) => {
 });
 
 
-
-
 // Middleware to authenticate user from JWT (if you're using tokens)
 const authenticateUser = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -285,23 +280,6 @@ app.post('/create-admin', async (req, res) => {
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Start server
 app.listen(port, () => {
